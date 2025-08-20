@@ -10,6 +10,10 @@ const userSchema = new Schema(
             type: Boolean,
             default: false
         },
+    },
+    {
+        timestamps: true,
+        versionKey: false
     }
 );
 export const userModel = model("User", userSchema);
