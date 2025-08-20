@@ -1,5 +1,5 @@
+import bcrypt from "bcrypt";
 import { userModel } from "../../db/user-model.js";
-
 const getAllUsers = async (req, res) => {
 
     const users = await userModel.find();
@@ -18,14 +18,15 @@ const updateUser = async (req, res) => {
 };
 const createUser = async (req, res) => {
     const exist = await userModel.findOne({ email: req.body.email });
-
     if (exist) {
         return res.status(409).json({
             message: "User already exists",
             data: null
         });
     }
+    req.body.password = bcrypt.hashSync(req.body.password, 8);
     const newUser = await userModel.insertOne(req.body);
+    newUser.password = undefined;
     res.json({
         message: "User created successfully",
         data: newUser
