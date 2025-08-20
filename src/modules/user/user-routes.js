@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import { checkEmail } from "../../middleware/check-email.js";
 import { createUser, deleteUser, getAllUsers, login, updateUser } from "./user-controller.js";
+import { verifyToken } from "../../middleware/verify-token.js";
 export const userRoutes = Router();
 userRoutes.use(express.json());
 userRoutes.get('/users', getAllUsers);
