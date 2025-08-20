@@ -40,5 +40,24 @@ const deleteUser = async (req, res) => {
         data: deletedUser
     });
 };
-export { createUser, deleteUser, getAllUsers, updateUser };
+const login = async (req, res) => {
+    const exist = await userModel.findOne({ email: req.body.email });
+
+    if (!exist) {
+        return res.status(404).json({
+            message: "User not found",
+        });
+    }
+    const isPasswordValid = bcrypt.compareSync(req.body.password, exist.password);
+    if (!isPasswordValid) {
+        return res.status(401).json({
+            message: "emial or password is incorrect",
+        });
+    }
+    res.json({
+        message: `Welcocme ${exist.name}`,
+    });
+
+}
+export { createUser, deleteUser, getAllUsers, login, updateUser };
 
