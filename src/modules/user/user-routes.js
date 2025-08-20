@@ -1,10 +1,10 @@
 import express, { Router } from "express";
-import { createUser, deleteUser, getAllUsers, login, updateUser } from "./user-conroller.js";
-import { checkEmail } from "./middleware/check-email.js";
+import { checkEmail } from "../../middleware/check-email.js";
+import { createUser, deleteUser, getAllUsers, login, updateUser } from "./user-controller.js";
 export const userRoutes = Router();
 userRoutes.use(express.json());
 userRoutes.get('/users', getAllUsers);
 userRoutes.put('/users/:id', updateUser);
-userRoutes.post('/users', checkEmail,createUser);
+userRoutes.post('/users', checkEmail, createUser);
 userRoutes.post('/users/login', login);
 userRoutes.delete('/users/:id', deleteUser);

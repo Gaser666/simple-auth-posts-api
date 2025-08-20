@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
-import { userModel } from "../../db/user-model.js";
+import jwt from "jsonwebtoken";
+import { userModel } from "../../../db/models/user-model.js";
+
 const getAllUsers = async (req, res) => {
 
     const users = await userModel.find();
@@ -20,8 +22,6 @@ const createUser = async (req, res) => {
 
     req.body.password = bcrypt.hashSync(req.body.password, 8);
     const newUser = await userModel.insertOne(req.body);
-    console.log(newUser);
-
     newUser.password = undefined;
     res.json({
         message: "User created successfully",
@@ -50,10 +50,11 @@ const login = async (req, res) => {
             message: "emial or password is incorrect",
         });
     }
+    const token = jwt.sign({ _id: exist._id, role: exist.role }, "our_secret_key");
     res.json({
-        message: `Welcocme ${exist.name}`,
+        message: `Welcocme ${exist.name}`, token
     });
-
+    
 }
 export { createUser, deleteUser, getAllUsers, login, updateUser };
 

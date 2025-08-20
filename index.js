@@ -1,8 +1,11 @@
 import express from 'express';
 import { dbConnection } from './db/db-connection.js';
-import { userRoutes } from './src/modules/user-routs.js';
+import { postsRoutes } from './src/modules/post/post-routes.js';
+import { userRoutes } from './src/modules/user/user-routes.js';
+
 const app = express();
 app.use(userRoutes);
+app.use(postsRoutes);
 dbConnection
 
 
