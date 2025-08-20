@@ -17,9 +17,11 @@ const updateUser = async (req, res) => {
     });
 };
 const createUser = async (req, res) => {
-    
+
     req.body.password = bcrypt.hashSync(req.body.password, 8);
     const newUser = await userModel.insertOne(req.body);
+    console.log(newUser);
+
     newUser.password = undefined;
     res.json({
         message: "User created successfully",

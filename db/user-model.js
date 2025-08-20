@@ -6,6 +6,12 @@ const userSchema = new Schema(
         email: String,
         password: String,
         age: Number,
+        role: {
+            type: String,
+            default: "user",
+            enum: ["user", "admin"],
+
+        },
         isConfirmed: {
             type: Boolean,
             default: false
