@@ -1,7 +1,7 @@
-import { Router } from "express";
+import express, { Router } from "express";
 import { createUser, deleteUser, getAllUsers, updateUser } from "./user-conroller.js";
-
-const userRoutes = Router();
+export const userRoutes = Router();
+userRoutes.use(express.json());
 userRoutes.get('/users', getAllUsers);
 userRoutes.put('/users/:id', updateUser);
 userRoutes.post('/users', createUser);

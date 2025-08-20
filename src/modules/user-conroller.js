@@ -1,6 +1,7 @@
 import { userModel } from "../../db/user-model.js";
 
 const getAllUsers = async (req, res) => {
+
     const users = await userModel.find();
     res.json({
         message: "All users fetched successfully",
@@ -16,6 +17,14 @@ const updateUser = async (req, res) => {
     });
 };
 const createUser = async (req, res) => {
+    const exist = await userModel.findOne({ email: req.body.email });
+
+    if (exist) {
+        return res.status(409).json({
+            message: "User already exists",
+            data: null
+        });
+    }
     const newUser = await userModel.insertOne(req.body);
     res.json({
         message: "User created successfully",
